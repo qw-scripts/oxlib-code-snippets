@@ -1,0 +1,26 @@
+{
+  "name": "oxlib-code-snippets",
+  "publisher": "qw-scripts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qw-scripts/oxlib-code-snippets.git"
+  },
+  "displayName": "Overextended Library Code Snippets",
+  "description": "Snippets for the ox_lib resource",
+  "qna": "marketplace",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.58.0"
+  },
+  "categories": [
+    "Snippets"
+  ],
+  "contributes": {
+    "snippets": [
+      {
+        "language": "lua",
+        "path": "./snippets/ox_lib.code-snippets"
+      }
+    ]
+  }
+}

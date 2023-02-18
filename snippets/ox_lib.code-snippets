@@ -1,0 +1,621 @@
+{ // Interface Stuff
+	"Alert Dialog": {
+		"scope": "lua",
+		"prefix": "ad",
+		"body": [
+			"local alert = lib.alertDialog({",
+				"header = '$1',",
+				"content = '$2',",
+				"centered = $3,",
+				"cancel = $4",
+			"})"
+		],
+		"description": "Create an Alert Dialog"
+	},
+	"Clipboard": {
+		"scope": "lua",
+		"prefix": "clip",
+		"body": [
+			"lib.setClipboard($1)"
+		],
+		"description": "Set the clipboard"
+	},
+	"Register a Context Menu": {
+		"scope": "lua",
+		"prefix": "context",
+		"body": [
+			"lib.registerContext({",
+    			"\tid = '$1',",
+				"\ttitle = '$2',",
+				"\toptions = {",
+					"\t\t{",
+						"\t\t\ttitle = '$3',",
+						"\t\t\tdescription = '$4',",
+						"\t\t\tonSelect = function(args)",
+						"\t\t\t\t$5",
+						"\t\t\tend,",
+						"\t\t\tmetadata = {",
+							"\t\t\t\t{label = '$6', value = '$7'},",
+						"\t\t\t}",
+					"\t\t},",
+				"\t},",
+			"})"
+		],
+		"description": "Register a Context Menu"
+	},
+	"Register a Input Dialog": {
+		"scope": "lua",
+		"prefix": "input",
+		"body": [
+			"local input = lib.inputDialog('$1', {",
+    			"\t{ type = 'input', label = '$2', placeholder = '$3' },",
+			"})",
+			"\n",
+			"print(json.encode(input, {indent=true}))"
+		],
+		"description": "Register a Context Menu"
+	},
+	"Register a Menu": {
+		"scope": "lua",
+		"prefix": "menu",
+		"body": [
+			"lib.registerMenu({",
+    			"\tid = '$1',",
+    			"\ttitle = '$2',",
+				"\tposition = '$3',",
+				"\tonSideScroll = function(selected, scrollIndex, args)",
+					"\t\t$4",
+				"\tend,",
+				"\tonSelect = function(selected, args)",
+					"\t\t$5",
+				"\tend,",
+				"\tonCheck = function(selected, checked, args)",
+					"\t\t$6",
+				"\tend,",
+				"\tonClose = function(keyPresses)",
+					"\t\t$7",
+				"\tend,",
+				"\toptions = {",
+					"\t\t{label = '$8', description = '$9'},",
+				"\t},",
+				"}, function(selected, scrollIndex, args)",
+					"\t$10",
+				"end)",
+		],
+		"description": "Register a Menu"
+	},
+	"notify": {
+		"scope": "lua",
+		"prefix": "notify",
+		"body": [
+			"lib.notify({",
+    			"\ttitle = '$1',",
+    			"\tdescription = '$2',",
+    			"\ttype = '$3'",
+			"})",
+		],
+		"description": "Register a Notification"
+	},
+	"progressbar": {
+		"scope": "lua",
+		"prefix": "pb",
+		"body": [
+			"if lib.progressBar({",
+    			"\tduration = $1,",
+    			"\tlabel = '$2',",
+    			"\tuseWhileDead = $3,",
+				"\tcanCancel = $4,",
+				"\tdisable = {",
+					"\t\t$5",
+				"\t},",
+			"}) then print('Do stuff when complete') else print('Do stuff when cancelled') end",
+		],
+		"description": "Create a Progressbar"
+	},
+	"progresscircle": {
+		"scope": "lua",
+		"prefix": "pc",
+		"body": [
+			"if lib.progressCircle({",
+    			"\tduration = $1,",
+				"\tposition = '$2',",
+    			"\tlabel = '$3',",
+    			"\tuseWhileDead = $4,",
+				"\tcanCancel = $5,",
+				"\tdisable = {",
+					"\t\t$6",
+				"\t},",
+			"}) then print('Do stuff when complete') else print('Do stuff when cancelled') end",
+		],
+		"description": "Create a Progressbar"
+	},
+	"skillcheck": {
+		"scope": "lua",
+		"prefix": "sc",
+		"body": [
+			"local success = lib.skillCheck({$1})",
+		],
+		"description": "Create a Skill Check"
+	},
+	"showTextUI": {
+		"scope": "lua",
+		"prefix": "tui",
+		"body": [
+			"lib.showTextUI('$1')",
+		],
+		"description": "Show a Text UI"
+	},
+	"hideTextUI": {
+		"scope": "lua",
+		"prefix": "htui",
+		"body": [
+			"lib.hideTextUI()",
+		],
+		"description": "Hide a Text UI"
+	},
+	// ACL
+	"addAce": {
+		"scope": "lua",
+		"prefix": "addace",
+		"body": [
+			"lib.addAce($1, $2, $3)"
+		],
+		"description": "lib.addAce(principal, ace, allow)"
+	},
+	"removeAce": {
+		"scope": "lua",
+		"prefix": "removeace",
+		"body": [
+			"lib.removeAce($1, $2, $3)"
+		],
+		"description": "lib.removeAce(principal, ace, allow)"
+	},
+	"addPrincipal": {
+		"scope": "lua",
+		"prefix": "addprincipal",
+		"body": [
+			"lib.addPrincipal($1, $2)"
+		],
+		"description": "lib.addPrincipal(child, parent)"
+	},
+	"removePrincipal": {
+		"scope": "lua",
+		"prefix": "removeprincipal",
+		"body": [
+			"lib.removePrincipal($1, $2)"
+		],
+		"description": "lib.removePrincipal(child, parent)"
+	},
+	// Add Commands
+	"addCommand": {
+		"scope": "lua",
+		"prefix": "ac",
+		"body": [
+			"lib.addCommand('$1', {'$2'}, function(source, args)",
+				"\t$3",
+			"end, {'$4'})"
+		],
+		"description": "lib.addCommand(principal, command, callback, parameters, help)"
+	},
+
+	// Keybinds
+	"addKeybind": {
+		"scope": "lua",
+		"prefix": "ak",
+		"body": [
+			"local keybind = lib.addKeybind({",
+				"\tname = '$1',",
+				"\tdescription = '$2',",
+				"\tonPressed = function(self)",
+					"\t\t$3",
+				"\tend,",
+				"\tonReleased = function(self)",
+					"\t\t$4",
+				"\tend,",
+			"})"
+		],
+		"description": "lib.addKeybind(data)"
+	},
+	"keybindDisable": {
+		"scope": "lua",
+		"prefix": "dkb",
+		"body": [
+			"$1:disable($2)",
+		],
+		"description": "keybind:disable(disable)"
+	},
+
+	// Cache
+	"pedCache": {
+		"scope": "lua",
+		"prefix": "cped",
+		"body": [
+			"cache.ped",
+		],
+		"description": "cache.ped"
+	},
+	"playerIdCache": {
+		"scope": "lua",
+		"prefix": "cpid",
+		"body": [
+			"cache.playerId",
+		],
+		"description": "cache.playerId"
+	},
+	"serverIdCache": {
+		"scope": "lua",
+		"prefix": "csid",
+		"body": [
+			"cache.serverId",
+		],
+		"description": "cache.serverId"
+	},
+	"vehicleCache": {
+		"scope": "lua",
+		"prefix": "cveh",
+		"body": [
+			"cache.vehicle",
+		],
+		"description": "cache.vehicle"
+	},
+	"seatCache": {
+		"scope": "lua",
+		"prefix": "cseat",
+		"body": [
+			"cache.seat",
+		],
+		"description": "cache.seat"
+	},
+	"resourceCache": {
+		"scope": "lua",
+		"prefix": "cres",
+		"body": [
+			"cache.resource",
+		],
+		"description": "cache.resource"
+	},
+	"weaponCache": {
+		"scope": "lua",
+		"prefix": "cweap",
+		"body": [
+			"cache.weapon",
+		],
+		"description": "cache.weapon"
+	},
+	"onCache": {
+		"scope": "lua",
+		"prefix": "con",
+		"body": [
+			"lib.onCache('$1', function(value)",
+				"\t$2",
+			"end)",
+		],
+		"description": "lib.onCache(key, function(value) end)"
+	},
+
+	// Callbacks
+	"Trigger Server Callback": {
+		"scope": "lua",
+		"prefix": "tscb",
+		"body": [
+			"lib.callback('$1', $2, function($3)",
+				"\t$2",
+			"end, $3)",
+		],
+		"description": "lib.callback(name, delay, cb, ...)"
+	},
+	"Trigger Server Callback (Await)": {
+		"scope": "lua",
+		"prefix": "atscb",
+		"body": [
+			"local $1 = lib.callback.await('$2', $3, '$4')",
+		],
+		"description": "lib.callback.await(name, delay, ...)"
+	},
+	"Register Client Callback": {
+		"scope": "lua",
+		"prefix": "rccb",
+		"body": [
+			"lib.callback.register('$1', function($2)",
+				"\t$3",
+			"end)",
+		],
+		"description": "lib.callback.register(name, cb)"
+	},
+	"Trigger Client Callback": {
+		"scope": "lua",
+		"prefix": "tccb",
+		"body": [
+			"lib.callback('$1', $2, function($3)",
+				"\t$4",
+			"end, $5)",
+		],
+		"description": "lib.callback(name, source, cb, ...)"
+	},
+	"Trigger Client Callback (Await)": {
+		"scope": "lua",
+		"prefix": "atccb",
+		"body": [
+			"local $1 = lib.callback.await('$2', $3, $4)",
+		],
+		"description": "lib.callback.await(name, source, ...)"
+	},
+	"Register Server Callback": {
+		"scope": "lua",
+		"prefix": "rscb",
+		"body": [
+			"lib.callback.register('$1', function($2)",
+				"\t$3",
+			"end)",
+		],
+		"description": "lib.callback.register(name, cb)"
+	},
+
+	// Disable Controls
+	"Disable Control (Add)": {
+		"scope": "lua",
+		"prefix": "dca",
+		"body": [
+			"lib.disableControls:Add($1)",
+		],
+		"description": "lib.disableControls:Add(...)"
+	},
+	"Disable Control (Remove)": {
+		"scope": "lua",
+		"prefix": "dcr",
+		"body": [
+			"lib.disableControls:Remove($1)",
+		],
+		"description": "lib.disableControls:Remove(...)"
+	},
+	"Disable Control (Clear)": {
+		"scope": "lua",
+		"prefix": "dcc",
+		"body": [
+			"lib.disableControls:Clear($1)",
+		],
+		"description": "lib.disableControls:Clear(...)"
+	},
+
+	// GetClosestPlayer
+	"GetClosestPlayer": {
+		"scope": "lua",
+		"prefix": "gcp",
+		"body": [
+			"local player = lib.getClosestPlayer($1, $2, $3)",
+		],
+		"description": "function lib.getClosestPlayer(coords, maxDistance, includePlayer) end"
+	},
+
+	// GetClosestVehicle
+	"GetClosestVehicle": {
+		"scope": "lua",
+		"prefix": "gcv",
+		"body": [
+			"local vehicle = lib.getClosestVehicle($1, $2, $3)",
+		],
+		"description": "function lib.getClosestVehicle(coords, maxDistance, includePlayerVehicle) end"
+	},
+
+	// GetNearbyPlayers
+	"GetNearbyPlayers": {
+		"scope": "lua",
+		"prefix": "gnp",
+		"body": [
+			"local players = lib.getNearbyPlayers($1, $2, $3)",
+		],
+		"description": "function lib.getNearbyPlayers(coords, maxDistance, includePlayer) end"
+	},
+
+	// GetNearbyPlayers
+	"GetNearbyVehicles": {
+		"scope": "lua",
+		"prefix": "gnv",
+		"body": [
+			"local vehicles = lib.getNearbyVehicles($1, $2, $3)",
+		],
+		"description": "function lib.getNearbyVehicles(coords, maxDistance, includePlayerVehicle) end"
+	},
+
+	// Logger
+	"Logger": {
+		"scope": "lua",
+		"prefix": "log",
+		"body": [
+			"lib.logger($1, '$2', $3)",
+		],
+		"description": "lib.logger(source, event, message, ...)"
+	},
+
+	// Points
+	"New Points": {
+		"scope": "lua",
+		"prefix": "pts",
+		"body": [
+			"local $1 = lib.points.new($2, $3, {",
+				"\t$4",
+			"})",
+			"\n",
+			"function $1:onEnter()",
+				"\t$5",
+			"end",
+			"\n",
+			"function $1:onExit()",
+				"\t$6",
+			"end",
+			"\n",
+			"function $1:nearby()",
+				"\t$7",
+			"end",
+		],
+		"description": "lib.points.new(coords, distance, data)"
+	},
+
+	// Raycast Shape Test
+	"Raycast Shape Test": {
+		"scope": "lua",
+		"prefix": "rst",
+		"body": [
+			"local $1 = lib.raycast.cam($2, $3)",
+		],
+		"description": "function lib.raycast.cam(flags, p8) end"
+	},
+
+	// Streaming Assets
+	"Request Anim Dictionary": {
+		"scope": "lua",
+		"prefix": "rad",
+		"body": [
+			"lib.requestAnimDict($1, $2)",
+		],
+		"description": "lib.requestAnimDict(dict, timeout)"
+	},
+	"Request Anim Set": {
+		"scope": "lua",
+		"prefix": "ras",
+		"body": [
+			"lib.requestAnimSet($1, $2)",
+		],
+		"description": "lib.requestAnimSet(set, timeout)"
+	},
+	"Request Model": {
+		"scope": "lua",
+		"prefix": "rm",
+		"body": [
+			"lib.requestModel($1, $2)",
+		],
+		"description": "lib.requestModel(model, timeout)"
+	},
+	"Request Streamed Texture Dictionary": {
+		"scope": "lua",
+		"prefix": "rstd",
+		"body": [
+			"lib.requestStreamedTextureDict($1, $2)",
+		],
+		"description": "lib.requestStreamedTextureDict(dict, timeout)"
+	},
+	"Request Named PtfxAsset": {
+		"scope": "lua",
+		"prefix": "rnpa",
+		"body": [
+			"lib.requestNamedPtfxAsset($1, $2)",
+		],
+		"description": "lib.requestNamedPtfxAsset(fxName, timeout)"
+	},
+	"Request Scaleform Movie": {
+		"scope": "lua",
+		"prefix": "rsfm",
+		"body": [
+			"lib.requestScaleformMovie($1, $2)",
+		],
+		"description": "lib.requestScaleformMovie(scaleformMovie, timeout)"
+	},
+
+	// Vehicle Properties
+	"Get Vehicle Properties": {
+		"scope": "lua",
+		"prefix": "gvp",
+		"body": [
+			"lib.getVehicleProperties($1)",
+		],
+		"description": "lib.getVehicleProperties(vehicle)"
+	},
+	"Set Vehicle Properties": {
+		"scope": "lua",
+		"prefix": "gvp",
+		"body": [
+			"lib.setVehicleProperties($1, $2)",
+		],
+		"description": "lib.setVehicleProperties(vehicle, props)"
+	},
+
+	// Version Check
+	"Version Check": {
+		"scope": "lua",
+		"prefix": "vc",
+		"body": [
+			"lib.versionCheck($1)",
+		],
+		"description": "lib.versionCheck(repository)"
+	},
+
+	"Dep Check": {
+		"scope": "lua",
+		"prefix": "dc",
+		"body": [
+			"lib.checkDependency($1, $2)",
+		],
+		"description": "lib.checkDependency(resource, version)"
+	},
+
+	// Zones
+
+	"Poly Zone": {
+		"scope": "lua",
+		"prefix": "cpz",
+		"body": [
+			"local $1 = lib.zones.poly({",
+				"\tpoints = {",
+					"\t\t$2",
+				"\t},",
+				"\tthickness = $3,",
+				"\tdebug = $4,",
+				"\tinside = function()",
+					"\t\t$5",
+				"\tend,",
+				"\tonEnter = function()",
+					"\t\t$6",
+				"\tend,",
+				"\tonExit = function()",
+					"\t\t$7",
+				"\tend,",
+				"})",
+		],
+		"description": "lib.zones.poly(data)"
+	},
+
+	"Sphere Zone": {
+		"scope": "lua",
+		"prefix": "csz",
+		"body": [
+			"local $1 = lib.zones.sphere({",
+				"\tcoords = $2,",
+				"\tradius = $3,",
+				"\tdebug = $4,",
+				"\tinside = function()",
+					"\t\t$5",
+				"\tend,",
+				"\tonEnter = function()",
+					"\t\t$6",
+				"\tend,",
+				"\tonExit = function()",
+					"\t\t$7",
+				"\tend,",
+				"})",
+		],
+		"description": "lib.zones.sphere(data)"
+	},
+
+	"Box Zone": {
+		"scope": "lua",
+		"prefix": "cbz",
+		"body": [
+			"local $1 = lib.zones.box({",
+				"\tcoords = $2,",
+				"\tsize = $3,",
+				"\trotation = $4,",
+				"\tdebug = $5,",
+				"\tinside = function()",
+					"\t\t$6",
+				"\tend,",
+				"\tonEnter = function()",
+					"\t\t$7",
+				"\tend,",
+				"\tonExit = function()",
+					"\t\t$8",
+				"\tend,",
+				"})",
+		],
+		"description": "lib.zones.box(data)"
+	},
+}
