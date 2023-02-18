@@ -522,7 +522,7 @@
 	},
 	"Set Vehicle Properties": {
 		"scope": "lua",
-		"prefix": "gvp",
+		"prefix": "svp",
 		"body": [
 			"lib.setVehicleProperties($1, $2)",
 		],
