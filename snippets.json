@@ -4,10 +4,16 @@
     "prefix": "ad",
     "body": [
       "local alert = lib.alertDialog({",
-      "header = '$1',",
-      "content = '$2',",
-      "centered = $3,",
-      "cancel = $4",
+      "\theader = '$1',",
+      "\tcontent = '$2',",
+      "\tcentered = $3,",
+      "\tcancel = $4,",
+      "\tsize = '$5',",
+      "\toverflow = $6,",
+      "\tlabels = {",
+      "\t\tcancel = '$7',",
+      "\t\tconfirm = '$8',",
+      "\t}",
       "})"
     ],
     "description": "Create an Alert Dialog"
@@ -41,7 +47,7 @@
     ],
     "description": "Register a Context Menu"
   },
-  "Register a Input Dialog": {
+  "Show Input Dialog": {
     "scope": "lua",
     "prefix": "input",
     "body": [
@@ -51,7 +57,7 @@
       "\n",
       "print(json.encode(input, {indent=true}))"
     ],
-    "description": "Register a Context Menu"
+    "description": "The input dialog window allows you to take data from the user by setting input fields"
   },
   "Register a Menu": {
     "scope": "lua",
@@ -133,6 +139,48 @@
     "body": ["local success = lib.skillCheck({$1})"],
     "description": "Create a Skill Check"
   },
+  "Add Radial Item": {
+    "scope":"lua",
+    "prefix": "aradial",
+    "body": [
+      "lib.addRadialItem({",
+      "\tid = '$1',",
+      "\ticon = '$2',",
+      "\tlabel = '$3',",
+      "\tmenu = '$4',",
+      "\tonSelect = function(currentMenu, itemIndex)",
+      "\t\t$5",
+      "\tend,",
+      "})"
+    ],
+    "description": "Adds an item to the global radial menu."
+  },
+  "Remove Radial Item": {
+    "scope":"lua",
+    "prefix": "rradial",
+    "body": [
+      "lib.removeRadialItem('$1')"
+    ],
+    "description": "Removes an item from the global radial menu."
+  },
+  "Register a Radial Menu": {
+    "scope": "lua",
+    "prefix": "radial",
+    "body": [
+      "lib.registerMenu({",
+      "\tid = '$1',",
+      "\titems = {",
+      "\t\ticon = '$2',",
+      "\t\tlabel = '$3',",
+      "\t\tmenu = '$4',",
+      "\t\tonSelect = function(currentMenu, itemIndex)",
+      "\t\t\t$5",
+      "\t\tend,",
+      "\t}",
+      "})"
+    ],
+    "description": "Registers a radial sub menu with predefined options."
+  },
   "showTextUI": {
     "scope": "lua",
     "prefix": "tui",
@@ -173,11 +221,21 @@
     "scope": "lua",
     "prefix": "ac",
     "body": [
-      "lib.addCommand('$1', {'$2'}, function(source, args)",
-      "\t$3",
-      "end, {'$4'})"
+      "lib.addCommand('$1', {",
+      "\thelp = '$2',",
+      "\tparams = {",
+      "\t\t{",
+      "\t\t\tname = '$3',",
+      "\t\t\ttype = '$4',",
+      "\t\t\thelp = '$5',",
+      "\t\t}",
+      "\t},",
+      "\trestricted = '$6',",
+      "}, function(source, args, raw)",
+      "\t$7",
+      "end)"
     ],
-    "description": "lib.addCommand(principal, command, callback, parameters, help)"
+    "description": "Registers commands and simplifies argument validation, permissions, and chat suggestions."
   },
 
   "addKeybind": {
@@ -312,14 +370,14 @@
   "GetClosestPlayer": {
     "scope": "lua",
     "prefix": "gcp",
-    "body": ["local player = lib.getClosestPlayer($1, $2, $3)"],
+    "body": ["local playerId, playerPed, playerCoords = lib.getClosestPlayer($1, $2, $3)"],
     "description": "function lib.getClosestPlayer(coords, maxDistance, includePlayer) end"
   },
 
   "GetClosestVehicle": {
     "scope": "lua",
     "prefix": "gcv",
-    "body": ["local vehicle = lib.getClosestVehicle($1, $2, $3)"],
+    "body": ["local vehicle, vehicleCoords = lib.getClosestVehicle($1, $2, $3)"],
     "description": "function lib.getClosestVehicle(coords, maxDistance, includePlayerVehicle) end"
   },
 
